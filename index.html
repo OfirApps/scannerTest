@@ -20,7 +20,7 @@
 
 const html5QrCode = new Html5Qrcode("reader");
 const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-    document.getElementById('help').innerText = decodedResult;
+    document.getElementById('help').innerText = decodedText;
 };
 const config = { fps: 10, qrbox: { width: window.innerWidth-50, height: window.innerHeight-50 } };
 
