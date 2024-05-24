@@ -16,12 +16,12 @@
 
 </head>
 <body>
-    <div id="secondscreen" >
+    <div id="secondscreen" style="display: none;">
       <div id="reader"></div>
 
 
     </div>
-    <div id="thirdscreen" style="display: none;">
+    <div id="thirdscreen" >
         <div id="top">
             <p>אשף הנסיעות לקביעת תעריף</p>
             <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg">
@@ -77,7 +77,7 @@ function selectStop(stop) {
 }
 
 
-var map = L.map('map').setView([51.505, -0.09], 13);
+var map = L.map('map').setView([32.505, 34.09], 13);
 
 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '',

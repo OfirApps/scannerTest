@@ -26,13 +26,13 @@ body {
   max-height: calc(100vh - 5vh - 300px);
 }
 #stops p {
-  margin-bottom: -5px;
-  margin-top: -7px;
+  margin-bottom: -9px;
+  margin-top: -13px;
   user-select: none;
 }
 #stops .stop::marker {
   color: #3388ff;
-  content: "𐤏︎ ";
+  font-size: 1.5rem;
   font-weight: 900;
 }
 #stops #extender {
@@ -42,7 +42,7 @@ body {
   z-index: -1;
   position: relative;
   top: 0px;
-  right: -0.774rem;
+  right: -1.2rem;
   margin: 0px;
 }
 #stops :last-child {
