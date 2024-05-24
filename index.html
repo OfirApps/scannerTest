@@ -7,27 +7,122 @@
     <link rel="stylesheet" href="style.css">
     <script src="qr-scanner.min.js" type="text/javascript"></script>
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+
 </head>
 <body>
-    <div id="secondscreen">
+    <div id="secondscreen" >
       <div id="reader"></div>
 
 
     </div>
-    
+    <div id="thirdscreen" style="display: none;">
+        <div id="top">
+            <p>אשף הנסיעות לקביעת תעריף</p>
+            <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 4.29289C8.68342 3.90237 9.31658 3.90237 9.70711 4.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L9.70711 19.7071C9.31658 20.0976 8.68342 20.0976 8.29289 19.7071C7.90237 19.3166 7.90237 18.6834 8.29289 18.2929L14.5858 12L8.29289 5.70711C7.90237 5.31658 7.90237 4.68342 8.29289 4.29289Z" fill="#000000"/>
+            </svg>
+        </div>
+        <div id="mapbody">
+            <div id="map" style="height: 300px;"></div>
+            <div id="stopsList">
+                <ul id="stops">
+
+                </ul>
+            </div>
+        </div>
+    </div>
     
 <script>
 
 const html5QrCode = new Html5Qrcode("reader");
 const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-    document.getElementById('help').innerText = decodedText;
+    document.getElementById('secondscreen').style.display = "none";
+    document.getElementById('thirdscreen').style.display = "block";
 };
 const config = { fps: 10, qrbox: { width: window.innerWidth-50, height: window.innerHeight-50 } };
 
 // If you want to prefer back camera
 html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+
 document.getElementById("reader").innerHTML += `<div style="
     position: fixed;bottom: 32vh;width: 100vw;text-align: center;color: white;direction: rtl;font-family: system-ui;z-index:999;" id="help">שימו לב שהקוד ממוקד בתוך המסגרת. <br>הסריקה תתבצע באופן אוטומטי</div>`
+
+function processData(dataX) {
+    //for each child that has propeties.class == "Bus Stop"
+    for (let i = 0; i < dataX.features.length; i++) {
+        if (dataX.features[i].properties.class == "Bus stop") {
+            div = document.createElement("li");
+            div.className = "stop";
+            div.id = dataX.features[i].properties.id;
+            div.innerHTML = `<p>${dataX.features[i].properties.name}</p><div id="extender"></div>`;
+            div.onclick = function() {
+                selectStop(dataX.features[i]);
+            }
+            div.onclick = function() {
+                selectStop(dataX.features[i]);
+            }
+            document.getElementById("stops").appendChild(div)
+        }
+    }
+}
+
+function selectStop(stop) {
+    console.log("stopSelected " + stop.properties.name)
+}
+
+
+var map = L.map('map').setView([51.505, -0.09], 13);
+
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '',
+    maxZoom: 18
+}).addTo(map);
+var locator = map.locate({
+    setView:true
+})
+// Load GeoJSON data from a file (replace with your actual file path)
+var geojsonMarkerOptions = {
+    radius: 8,
+    fillColor: "#FFFFFF",
+    color: "#3388ff",
+    weight: 2,
+    opacity: 1, 
+    fillOpacity: 1,
+    stroke:true
+};
+fetch('data.geojson')
+    .then(response => response.json())
+    .then(data => {
+        processData(data);
+        L.geoJSON(data,{
+            style: function(feature) {
+            console.log(feature.properties.class);
+            if (feature.properties.class == "Bus stop") {
+                return {
+                    geojsonMarkerOptions
+                }
+            }
+
+        },
+        pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, geojsonMarkerOptions);
+        },
+        onEachFeature: function (feature, layer) {
+            if (feature.properties.class == "Bus stop") {
+                layer.on('click', function (e) {
+                    selectStop(feature);
+                });
+            }
+            }   
+        }).addTo(map);
+    });
+
 </script>
 </body>
 </html>
