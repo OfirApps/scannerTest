@@ -51,6 +51,9 @@ body {
 #stops :last-child #extender {
   display: none;
 }
+#stops :first-child {
+  margin-top: 5vh;
+}
 #reader {
   max-width: 100vw;
   max-height: 100vh;
