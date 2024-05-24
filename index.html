@@ -25,7 +25,8 @@ const config = { fps: 10, qrbox: { width: window.innerWidth-50, height: window.i
 
 // If you want to prefer back camera
 html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
-
+document.getElementById("reader").innerHTML += `<div style="
+    position: fixed;bottom: 32vh;width: 100vw;text-align: center;color: white;direction: rtl;font-family: system-ui;z-index:999;">שימו לב שהקוד ממוקד בתוך המסגרת. <br>הסריקה תתבצע באופן אוטומטי</div>`
 </script>
 </body>
 </html>
