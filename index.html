@@ -27,31 +27,74 @@
 
 
     </div>
-    <div id="thirdscreen" >
+    <div id="thirdscreen">
         <div id="top">
             <p>אשף הנסיעות לקביעת תעריף</p>
-            <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg">
+            <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg" onclick="backfromStops()">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 4.29289C8.68342 3.90237 9.31658 3.90237 9.70711 4.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L9.70711 19.7071C9.31658 20.0976 8.68342 20.0976 8.29289 19.7071C7.90237 19.3166 7.90237 18.6834 8.29289 18.2929L14.5858 12L8.29289 5.70711C7.90237 5.31658 7.90237 4.68342 8.29289 4.29289Z" fill="#000000"/>
             </svg>
         </div>
         <div id="mapbody">
-            
             <div id="map" style="height: 300px;"></div>
             <h2>בחר תחנת יעד</h2>
             <div class="busInfo">
                 <div class="number">
                     <span id="busStopSelectionNumber">000</span>
-                    <svg fill="#000000" width="32px" height="32px" viewBox="-0.5 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m14.275 19.36c.001-.426.346-.771.772-.772h3.101c.426.001.771.346.772.772-.001.426-.346.771-.772.772h-3.101c-.426-.001-.771-.346-.772-.772zm-6.174 0c-.001.426-.346.771-.772.772h-3.101c-.426-.001-.771-.346-.772-.772.001-.426.346-.771.772-.772h3.101c.426.001.771.346.772.772zm-3.741-17.11h13.727c.499 0 .903.404.903.903l-.462 10.349v.001c0 .499-.404.903-.903.903h-12.8c-.499 0-.903-.404-.903-.903v-.001l-.462-10.349c0-.499.405-.903.904-.903zm17.685 1.944h-1.531v-3.143c-.001-.578-.469-1.047-1.047-1.048h-16.48c-.577.002-1.045.47-1.046 1.047v3.143h-1.474c-.255.001-.461.207-.462.462v3.826c0 .255.207.461.462.462h1.474v15.055h3.845v-2.013h10.865v2.013h3.846v-2.839c.015-.066.024-.142.025-.22v-12h1.531c.255-.001.461-.207.462-.462v-3.826c0-.255-.207-.461-.462-.462z"/></svg>
+                    <div id="busIcon">
+                        <svg fill="#000000" width="32px" height="32px" viewBox="-0.5 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m14.275 19.36c.001-.426.346-.771.772-.772h3.101c.426.001.771.346.772.772-.001.426-.346.771-.772.772h-3.101c-.426-.001-.771-.346-.772-.772zm-6.174 0c-.001.426-.346.771-.772.772h-3.101c-.426-.001-.771-.346-.772-.772.001-.426.346-.771.772-.772h3.101c.426.001.771.346.772.772zm-3.741-17.11h13.727c.499 0 .903.404.903.903l-.462 10.349v.001c0 .499-.404.903-.903.903h-12.8c-.499 0-.903-.404-.903-.903v-.001l-.462-10.349c0-.499.405-.903.904-.903zm17.685 1.944h-1.531v-3.143c-.001-.578-.469-1.047-1.047-1.048h-16.48c-.577.002-1.045.47-1.046 1.047v3.143h-1.474c-.255.001-.461.207-.462.462v3.826c0 .255.207.461.462.462h1.474v15.055h3.845v-2.013h10.865v2.013h3.846v-2.839c.015-.066.024-.142.025-.22v-12h1.531c.255-.001.461-.207.462-.462v-3.826c0-.255-.207-.461-.462-.462z"/></svg>
+                    </div>
                 </div>
                 <span>
                     תל אביב יפו
                 </span>
             </div>
             <div id="stopsList">
-                <ul id="stops">
-
-                </ul>
+                <ul id="stops"></ul>
             </div>
+        </div>
+    </div>
+
+    <div id="fourthscreen">
+        <div id="top">
+            <p>בחר מספר נוסעים</p>
+            <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg" onclick="backfromStop()">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 4.29289C8.68342 3.90237 9.31658 3.90237 9.70711 4.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L9.70711 19.7071C9.31658 20.0976 8.68342 20.0976 8.29289 19.7071C7.90237 19.3166 7.90237 18.6834 8.29289 18.2929L14.5858 12L8.29289 5.70711C7.90237 5.31658 7.90237 4.68342 8.29289 4.29289Z" fill="#000000"/>
+            </svg>
+            
+        </div>
+        <div id="noseaDefine">
+            <div class="biggerdiv">
+                <p>נוסע יחיד - תעריף <span id="noseatitle">רגיל</span></p>
+                <p class="note">נסיעה עד <span id="distance"></span> ק"מ</p>
+            </div>
+            <div class="smallerdiv">
+                <span id="price">0.0</span>₪
+            </div>
+        </div>
+        <div class="warning">
+            <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_iconCarrier"> <path d="M12 7.01001V7.00002M12 17L12 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#e4ae53" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </g>
+                
+                </svg>
+            <p>החיוב משוער, בסוף כל יום נחשב את התעריף הסופי, בהתבסס על שאר הנסיעות שלך.</p>
+        </div>
+        <div id="lastinfo">
+            <div id="passengerCount">
+                    <p>מספר הנוסעים: </p>
+                    <div>
+                        <span id="numofnoseim">1</span>
+                        <svg width="64px" height="64px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000">
+                            <g id="SVGRepo_iconCarrier"> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-516.000000, -1087.000000)" fill="#c3c3c3"> <path d="M532,1117 C524.268,1117 518,1110.73 518,1103 C518,1095.27 524.268,1089 532,1089 C539.732,1089 546,1095.27 546,1103 C546,1110.73 539.732,1117 532,1117 L532,1117 Z M532,1087 C523.163,1087 516,1094.16 516,1103 C516,1111.84 523.163,1119 532,1119 C540.837,1119 548,1111.84 548,1103 C548,1094.16 540.837,1087 532,1087 L532,1087 Z M538,1102 L526,1102 C525.447,1102 525,1102.45 525,1103 C525,1103.55 525.447,1104 526,1104 L538,1104 C538.553,1104 539,1103.55 539,1103 C539,1102.45 538.553,1102 538,1102 L538,1102 Z" id="minus-circle" sketch:type="MSShapeGroup"> </path> </g> </g> </g>
+                        </svg>
+                        <svg width="64px" height="64px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000">
+                            <g id="SVGRepo_iconCarrier"> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-464.000000, -1087.000000)" fill="#197cc0"> <path d="M480,1117 C472.268,1117 466,1110.73 466,1103 C466,1095.27 472.268,1089 480,1089 C487.732,1089 494,1095.27 494,1103 C494,1110.73 487.732,1117 480,1117 L480,1117 Z M480,1087 C471.163,1087 464,1094.16 464,1103 C464,1111.84 471.163,1119 480,1119 C488.837,1119 496,1111.84 496,1103 C496,1094.16 488.837,1087 480,1087 L480,1087 Z M486,1102 L481,1102 L481,1097 C481,1096.45 480.553,1096 480,1096 C479.447,1096 479,1096.45 479,1097 L479,1102 L474,1102 C473.447,1102 473,1102.45 473,1103 C473,1103.55 473.447,1104 474,1104 L479,1104 L479,1109 C479,1109.55 479.447,1110 480,1110 C480.553,1110 481,1109.55 481,1109 L481,1104 L486,1104 C486.553,1104 487,1103.55 487,1103 C487,1102.45 486.553,1102 486,1102 L486,1102 Z" id="plus-circle" sketch:type="MSShapeGroup"> </path> </g> </g> </g>
+                        </svg>
+                </div>
+            </div>
+            <div id="sumInfo">
+                <div>סה"כ (חישוב משוער): </div> <div id="sumUp"><span id="sum">0.0</span>₪</div>
+            </div>
+            <button>תקף נסיעה</button>
         </div>
     </div>
     
@@ -62,9 +105,16 @@ buspresets = {
     kavim:"#8cbcd8",
     metropolin: "#f78f1e",
     egged: "#018369",
-    dan:"#205cab"
+    dan:"#205cab",
+    electra:"#7fb90d",
+    superbus:"#003e7e",
+    rakal:"#ea0000"
 }
 
+nosea = {
+    hanaha:0.5,
+    title:"נוער"
+}
 
 function getDistance(origin, destination) {
     // return distance in meters
@@ -90,12 +140,19 @@ const html5QrCode = new Html5Qrcode("reader");
 const qrCodeSuccessCallback = (decodedText, decodedResult) => {
     document.getElementById('secondscreen').style.display = "none";
     document.getElementById('thirdscreen').style.display = "block";
+    html5QrCode.stop();
 };
+function backfromStops() {
+    document.getElementById('secondscreen').style.display = "block";
+    document.getElementById('thirdscreen').style.display = "none";
+    html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+}
+
+
 const config = { fps: 10, qrbox: { width: window.innerWidth-50, height: window.innerHeight-50 } };
 
 // If you want to prefer back camera
 html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
-
 document.getElementById("reader").innerHTML += `<div style="
     position: fixed;bottom: 32vh;width: 100vw;text-align: center;color: white;direction: rtl;font-family: system-ui;z-index:999;" id="help">שימו לב שהקוד ממוקד בתוך המסגרת. <br>הסריקה תתבצע באופן אוטומטי</div>`
 
@@ -117,10 +174,31 @@ function processData(dataX) {
         }
     }
 }
-
+price = 0.0;
 function selectStop(stop) {
     console.log(stop)
     console.log(getDistance(currentloc,stop.geometry.coordinates))
+    document.getElementById("thirdscreen").style.display = "none";
+    document.getElementById("fourthscreen").style.display = "block";
+    document.getElementById("noseatitle").innerText = nosea.title;
+    
+    if (getDistance(currentloc,stop.geometry.coordinates) > 15000) {
+        document.getElementById("distance").innerHTML = "40";
+        price = 12.00;
+        price = price * nosea.hanaha;
+        document.getElementById("price").innerText = price.toFixed(2);
+    } else {
+        document.getElementById("distance").innerHTML = "15";
+        price = 5.5;
+        price = price * nosea.hanaha;
+        document.getElementById("price").innerText = price.toFixed(2);
+    }
+
+
+}
+function backfromStop() {
+    document.getElementById("fourthscreen").style.display = "none";
+    document.getElementById("thirdscreen").style.display = "block";
 }
 
 
