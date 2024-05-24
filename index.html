@@ -22,12 +22,12 @@
 
 </head>
 <body>
-    <div id="secondscreen" style="display: none;">
+    <div id="secondscreen">
       <div id="reader"></div>
 
 
     </div>
-    <div id="thirdscreen">
+    <div id="thirdscreen" style="display: none;">
         <div id="top">
             <p>אשף הנסיעות לקביעת תעריף</p>
             <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg" onclick="backfromStops()">
@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <div id="fourthscreen">
+    <div id="fourthscreen" style="display: none;">
         <div id="top">
             <p>בחר מספר נוסעים</p>
             <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg" onclick="backfromStop()">
@@ -193,6 +193,7 @@ function selectStop(stop) {
         price = price * nosea.hanaha;
         document.getElementById("price").innerText = price.toFixed(2);
     }
+    document.getElementById("sum").innerText = price.toFixed(2);
 
 
 }
