@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moovit Pay</title>
+    <link rel="stylesheet" href="variables.css">
     <link rel="stylesheet" href="style.css">
+    
     <script src="qr-scanner.min.js" type="text/javascript"></script>
     <meta name="apple-mobile-web-app-capable" content="yes" /> 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ptma/Leaflet.Measure@master/src/leaflet.measure.css" />
+<script src="https://cdn.jsdelivr.net/gh/ptma/Leaflet.Measure@master/src/leaflet.measure.js"></script>
 
 </head>
 <body>
@@ -30,7 +35,18 @@
             </svg>
         </div>
         <div id="mapbody">
+            
             <div id="map" style="height: 300px;"></div>
+            <h2>בחר תחנת יעד</h2>
+            <div class="busInfo">
+                <div class="number">
+                    <span id="busStopSelectionNumber">000</span>
+                    <svg fill="#000000" width="32px" height="32px" viewBox="-0.5 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m14.275 19.36c.001-.426.346-.771.772-.772h3.101c.426.001.771.346.772.772-.001.426-.346.771-.772.772h-3.101c-.426-.001-.771-.346-.772-.772zm-6.174 0c-.001.426-.346.771-.772.772h-3.101c-.426-.001-.771-.346-.772-.772.001-.426.346-.771.772-.772h3.101c.426.001.771.346.772.772zm-3.741-17.11h13.727c.499 0 .903.404.903.903l-.462 10.349v.001c0 .499-.404.903-.903.903h-12.8c-.499 0-.903-.404-.903-.903v-.001l-.462-10.349c0-.499.405-.903.904-.903zm17.685 1.944h-1.531v-3.143c-.001-.578-.469-1.047-1.047-1.048h-16.48c-.577.002-1.045.47-1.046 1.047v3.143h-1.474c-.255.001-.461.207-.462.462v3.826c0 .255.207.461.462.462h1.474v15.055h3.845v-2.013h10.865v2.013h3.846v-2.839c.015-.066.024-.142.025-.22v-12h1.531c.255-.001.461-.207.462-.462v-3.826c0-.255-.207-.461-.462-.462z"/></svg>
+                </div>
+                <span>
+                    תל אביב יפו
+                </span>
+            </div>
             <div id="stopsList">
                 <ul id="stops">
 
@@ -40,6 +56,35 @@
     </div>
     
 <script>
+
+buspresets = {
+    // kavim: "#03296a",
+    kavim:"#8cbcd8",
+    metropolin: "#f78f1e",
+    egged: "#018369",
+    dan:"#205cab"
+}
+
+
+function getDistance(origin, destination) {
+    // return distance in meters
+    console.log(origin,destination)
+    var lon1 = toRadian(origin.longitude),
+        lat1 = toRadian(origin.latitude),
+        lon2 = toRadian(destination[0]),
+        lat2 = toRadian(destination[1]);
+
+    var deltaLat = lat2 - lat1;
+    var deltaLon = lon2 - lon1;
+
+    var a = Math.pow(Math.sin(deltaLat/2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(deltaLon/2), 2);
+    var c = 2 * Math.asin(Math.sqrt(a));
+    var EARTH_RADIUS = 6371;
+    return c * EARTH_RADIUS * 1000;
+}
+function toRadian(degree) {
+    return degree*Math.PI/180;
+}
 
 const html5QrCode = new Html5Qrcode("reader");
 const qrCodeSuccessCallback = (decodedText, decodedResult) => {
@@ -74,7 +119,8 @@ function processData(dataX) {
 }
 
 function selectStop(stop) {
-    console.log("stopSelected " + stop.properties.name)
+    console.log(stop)
+    console.log(getDistance(currentloc,stop.geometry.coordinates))
 }
 
 
@@ -85,7 +131,13 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18
 }).addTo(map);
 var locator = map.locate({
-    setView:true
+    setView:true,
+})
+
+
+map.on('locationfound', function(ev){
+currentloc = ev;
+console.log(currentloc)
 })
 // Load GeoJSON data from a file (replace with your actual file path)
 var geojsonMarkerOptions = {
