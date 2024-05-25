@@ -25,7 +25,7 @@
     <div id="firstscreen">
         <div id="top" class="noselect" >
             <p>חיפוש הקו</p>
-            <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg" onclick="backfromStops()">
+            <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 4.29289C8.68342 3.90237 9.31658 3.90237 9.70711 4.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L9.70711 19.7071C9.31658 20.0976 8.68342 20.0976 8.29289 19.7071C7.90237 19.3166 7.90237 18.6834 8.29289 18.2929L14.5858 12L8.29289 5.70711C7.90237 5.31658 7.90237 4.68342 8.29289 4.29289Z" fill="#c3c3c3c3"/>
             </svg>
         </div>
@@ -45,6 +45,12 @@
         <button onclick="go()">go</button>
     </div>
     <div id="secondscreen" style="display: none;">
+        <div id="top" class="noselect dark" >
+            <p>סרוק קוד QR</p>
+            <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg" onclick="backtoSelectia()">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 4.29289C8.68342 3.90237 9.31658 3.90237 9.70711 4.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L9.70711 19.7071C9.31658 20.0976 8.68342 20.0976 8.29289 19.7071C7.90237 19.3166 7.90237 18.6834 8.29289 18.2929L14.5858 12L8.29289 5.70711C7.90237 5.31658 7.90237 4.68342 8.29289 4.29289Z" fill="#000000"/>
+            </svg>
+        </div>
       <div id="reader"></div>
 
 
@@ -168,11 +174,19 @@ function toRadian(degree) {
     return degree*Math.PI/180;
 }
 
+
+function backtoSelectia() {
+    html5QrCode.stop();
+    document.getElementById('secondscreen').style.display = "none";
+    document.getElementById('firstscreen').style.display = "flex";
+}
+
 const html5QrCode = new Html5Qrcode("reader");
 const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+    html5QrCode.stop();
     document.getElementById('secondscreen').style.display = "none";
     document.getElementById('thirdscreen').style.display = "block";
-    html5QrCode.stop();
+    
 };
 function backfromStops() {
     document.getElementById('secondscreen').style.display = "block";
@@ -195,7 +209,7 @@ function go() {
     selection = JSON.parse(selection)
     html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
     document.getElementById("reader").innerHTML += `<div style="
-    position: fixed;bottom: 32vh;width: 100vw;text-align: center;color: white;direction: rtl;font-family: system-ui;z-index:999;" id="help">שימו לב שהקוד ממוקד בתוך המסגרת. <br>הסריקה תתבצע באופן אוטומטי</div>`
+    position: fixed;bottom: 24vh;width: 100vw;text-align: center;color: white;direction: rtl;font-family: system-ui;z-index:999;" id="help">שימו לב שהקוד ממוקד בתוך המסגרת. <br>הסריקה תתבצע באופן אוטומטי</div>`
     document.getElementById("secondscreen").style.display = "block";
     document.getElementById("firstscreen").style.display = "none";
     axxx= true
