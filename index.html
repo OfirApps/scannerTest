@@ -38,7 +38,7 @@
             <option value="{n:'11251-1-0',c:'metropolin'}">קו 251 - מטרופולין</option>
             <option value="{n:'14444-1-0',c:'metropolin'}">קו 444 - מטרופולין</option>
         </select> -->
-        <input oninput="searchKavim(this.value)" type="text" placeholder="חפש קו או תחנה">
+        <input oninput="searchKavim(this.value)" type="text" placeholder="חפש קו על פי עיר (מקום הגעה) ומספר">
         <select id="searchRes">
 
         </select>
@@ -200,17 +200,17 @@ function go() {
     document.getElementById("firstscreen").style.display = "none";
     axxx= true
     var mone1 = 1
-    var mone2 = 0
-    var mosef = '1-0'
+    var mone2 = -1
+    var mosef = '#'
     var mone0 = 0
     var myFunc02 = function() {
-    var i = 0;
-    var intervalId = setInterval(function() {
-        console.warn("a " + selection)
+    
+        console.warn("a " + selection + mosef)
         fetch(`https://corsproxy.io/?https://www.markav.net/shapes/?q=${selection.RouteID}-${mosef}`)
         .then(response => {
             if (response.status !=500) {
-                clearInterval(intervalId);
+                //clearInterval(intervalId);
+                
                 fetch(`https://corsproxy.io/?https://www.markav.net/shapes/?q=${selection.RouteID}-${mosef}`)
                 .then(response => response.json())
                 .then(data => {
@@ -262,8 +262,9 @@ function go() {
                     }).addTo(map);
                 });
             } else {
+                
                 // if (mone0 == 11) {
-                    if (mone2 == 10) {
+                if (mone2 == 10) {
                     mone1++
                     mone2 = 0
                     } else {
@@ -275,12 +276,13 @@ function go() {
                 //     mone0++
                 //     mosef = mone0
                 // }
+                setTimeout(myFunc02(),200);
             }
         })
-    }, 200);
+    
     };
-    myFunc02();
-
+    
+    setTimeout(myFunc02(),200);
     
 
 }
