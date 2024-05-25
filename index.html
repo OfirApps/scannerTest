@@ -256,8 +256,9 @@ function go() {
                     
                     L.geoJSON(data,{
                         style: function(feature) {
-                        console.log(feature.properties.class);
+                        
                         if (feature.properties.class == "Bus stop") {
+                            console.log("a")
                             return {
                                 geojsonMarkerOptions
                             }
@@ -265,10 +266,12 @@ function go() {
 
                     },
                     pointToLayer: function (feature, latlng) {
+                        console.log(feature.properties.class);
                     return L.circleMarker(latlng, geojsonMarkerOptions);
                     },
                     onEachFeature: function (feature, layer) {
                         if (feature.properties.class == "Bus stop") {
+                            console.log(feature.properties.class + " b");
                             layer.on('click', function (e) {
                                 selectStop(feature);
                             });
