@@ -278,6 +278,11 @@ function go() {
                         }
                         }   
                     }).addTo(map);
+
+                    var locator = map.locate({
+                        setView:true,
+                        watch:true
+                    })
                 });
             } else {
                 
@@ -424,10 +429,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '',
     maxZoom: 18
 }).addTo(map);
-var locator = map.locate({
-    setView:false,
-    watch:true
-})
+
 
 
 map.on('locationfound', function(ev){
