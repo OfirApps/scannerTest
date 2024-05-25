@@ -252,6 +252,7 @@ function go() {
                     }
                     document.querySelector('body').style.setProperty('--buscolor', colorr);
                     geojsonMarkerOptions.color = colorr
+                    document.getElementById("busStopSelectionNumber").innerHTML = selection.RouteName
 
                     L.geoJSON(data,{
                         style: function(feature) {
