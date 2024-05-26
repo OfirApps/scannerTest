@@ -230,16 +230,17 @@ function go() {
     var myFunc02 = function() {
     
         console.warn("a " + selection + mosef)
-        fetch(`https://corsproxy.io/?https://www.markav.net/shapes/?q=${selection.RouteID}-${mosef}`)
+        fetch(`https://corsproxy.io/`+ encodeURIComponent(`?https://www.markav.net/shapes/?q=${selection.RouteID}-${mosef}`))
         .then(response => {
             if (response.status !=500) {
                 //clearInterval(intervalId);
                 
-                fetch(`https://corsproxy.io/?https://www.markav.net/shapes/?q=${selection.RouteID}-${mosef}`)
+                fetch(`https://corsproxy.io/`+ encodeURIComponent(`?https://www.markav.net/shapes/?q=${selection.RouteID}-${mosef}`))
                 .then(response => response.json())
                 .then(data => {
                     processData(data);
                     //if selection.AgencyName includes "קווים" then color is buspresets.kavim, but if selection.AgencyName includes "מטרופולין" then color is buspresets.metropolin, and so on, "אגד" will be egged, "דן" will be dan and so on
+                    colorr = buspresets.rakal;
                     switch (selection.AgencyName) {
                         case "קווים":
                             colorr = buspresets.kavim;
