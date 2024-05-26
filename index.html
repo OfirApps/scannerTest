@@ -194,8 +194,22 @@ function backfromStops() {
     html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
 }
 
-
-const config = { fps: 10, qrbox: { width: window.innerWidth-50, height: window.innerHeight-50 } };
+const formatsToSupport = [
+			Html5QrcodeSupportedFormats.QR_CODE
+];
+const config = {
+		fps: 8,
+		qrbox: { width: window.innerWidth-50, height: window.innerHeight-50 },
+                    disableFlip: false,
+                    focusMode: "continuous",
+                    advanced:[{zoom: 2.0}],
+		rememberLastUsedCamera: true,
+		aspectRatio: 1,
+		experimentalFeatures: {
+			useBarCodeDetectorIfSupported: true
+		},
+		formatsToSupport: formatsToSupport
+};
 
 // If you want to prefer back camera
 
