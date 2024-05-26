@@ -203,11 +203,8 @@ function backfromStops() {
 const config = {
 		fps: 8,
 		qrbox: { width: window.innerWidth-50, height: window.innerHeight-50 },
-                    disableFlip: false,
-                    advanced:[{zoom: 1.0}],
-		rememberLastUsedCamera: true,
-		aspectRatio: 9/16,
-        showTorchButtonIfSupported:true
+        facingMode: { exact: "environment"}
+
 };
 
 // If you want to prefer back camera
@@ -222,7 +219,7 @@ function go() {
     selection = JSON.parse(selection)
     html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback,onScanError);
     document.getElementById("reader").innerHTML += `<div style="
-    position: fixed;bottom: 24vh;width: 100vw;text-align: center;color: white;direction: rtl;font-family: system-ui;z-index:999;" id="help">שימו לב שהקוד ממוקד בתוך המסגרת. <br>הסריקה תתבצע באופן אוטומטי</div>`
+    position: fixed;bottom: 24vh;width: 100vw;text-align: center;color: white;direction: rtl;font-family: system-ui;z-index:999;" id="help" onclick='qrCodeSuccessCallback()'>שימו לב שהקוד ממוקד בתוך המסגרת. <br>הסריקה תתבצע באופן אוטומטי</div>`
     document.getElementById("secondscreen").style.display = "block";
     document.getElementById("firstscreen").style.display = "none";
     axxx= true
@@ -456,7 +453,6 @@ if(navigator.userAgent.indexOf('iPhone') > -1 )
       .querySelector("[name=viewport]")
       .setAttribute("content","width=device-width, initial-scale=1, maximum-scale=1");
 }
-
 </script>
 </body>
 </html>
