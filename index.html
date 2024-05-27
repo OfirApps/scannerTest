@@ -418,10 +418,11 @@ maptilersdk.config.apiKey = key;
 // //     attribution: '',
 // //     maxZoom: 18
 // // }).addTo(map);
+maptilersdk.config.primaryLanguage = maptilersdk.Language.HEBREW;
+
 const map = new maptilersdk.Map({
         container: 'map', // container's id or the HTML element to render the map
         style: maptilersdk.MapStyle.STREETS,
-        language:L.Maptilerlanguage.ENGLISH,
         // center: [32.0030, 34.8435], // starting position [lng, lat]
         // zoom: 14 // starting zoom
         geolocate: maptilersdk.GeolocationType.POINT
