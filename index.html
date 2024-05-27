@@ -282,7 +282,7 @@ function go() {
             }
             }   
         }).addTo(map);
-        
+        map.invalidateSize()
     });
 }
 
@@ -412,6 +412,7 @@ map.on('locationfound', function(ev){
 currentloc = ev;
 console.log([currentloc.latlng.lat, currentloc.latlng.lng], 15)
 map.setView([currentloc.latlng.lat, currentloc.latlng.lng], 15)
+map.invalidateSize()
 setTimeout(function() {
     map.locate({
             setView:false,
