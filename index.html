@@ -14,8 +14,13 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+<!-- MapTiler SDK -->
+<script src="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.umd.js"></script>
+<link href="https://cdn.maptiler.com/maptiler-sdk-js/latest/maptiler-sdk.css" rel="stylesheet" />
+
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ptma/Leaflet.Measure@master/src/leaflet.measure.css" />
 <script src="https://cdn.jsdelivr.net/gh/ptma/Leaflet.Measure@master/src/leaflet.measure.js"></script>
@@ -252,10 +257,10 @@ function go() {
         geojsonMarkerOptions.color = colorr
         document.getElementById("busStopSelectionNumber").innerHTML = selection.RouteName
         document.querySelector("#mapbody > div.busInfo.noselect > span").innerHTML = selection.DestinationCityName
-        var locator = map.locate({
-            setView:false,
-            watch:false
-        })
+        // var locator = map.locate({
+        //     setView:false,
+        //     watch:false
+        // })
         map.setView([32.0030, 34.8435], 12);
         
         L.geoJSON(data,{
@@ -399,27 +404,43 @@ function searchKavim(input) {
         });
         }
 
-var map = L.map('map').setView([32.0030, 34.8435], 12);
+
+
+// var map = L.map('map').setView([32.0030, 34.8435], 12);
 key = atob("N1g2U2JuQXg4elFORkJYTlVDd2U")
-L.tileLayer(`https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}.png?key=${key}`, {
-    attribution: '',
-    maxZoom: 18
-}).addTo(map);
+maptilersdk.config.apiKey = key;
+// // L.tileLayer(`https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}.png?key=${key}`, {
+// //     attribution: '',
+// //     maxZoom: 18
+// // }).addTo(map);
+const map = new maptilersdk.Map({
+        container: 'map', // container's id or the HTML element to render the map
+        style: maptilersdk.MapStyle.STREETS,
+        center: [32.0030, 34.8435], // starting position [lng, lat]
+        zoom: 14 // starting zoom
+});
+// L.maptilerLayer({
+//   // Get your free API key at https://cloud.maptiler.com
+//   apiKey: key,
+//   style:MaptilerStyle.STREETS,
+//   language:L.MaptilerLanguage.LOCAL,
+//   geolocate:true
 
+// }).addTo(map);
+//map.setView([32.0030, 34.8435], 12);
 
-
-map.on('locationfound', function(ev){
-currentloc = ev;
-console.log([currentloc.latlng.lat, currentloc.latlng.lng], 15)
-map.setView([currentloc.latlng.lat, currentloc.latlng.lng], 15)
-map.invalidateSize()
-setTimeout(function() {
-    map.locate({
-            setView:false,
-            watch:false
-    })
-},20*1000)
-})
+// map.on('locationfound', function(ev){
+// currentloc = ev;
+// console.log([currentloc.latlng.lat, currentloc.latlng.lng], 15)
+// map.setView([currentloc.latlng.lat, currentloc.latlng.lng], 15)
+// map.invalidateSize()
+// setTimeout(function() {
+//     map.locate({
+//             setView:false,
+//             watch:false
+//     })
+// },20*1000)
+// })
 
 if(navigator.userAgent.indexOf('iPhone') > -1 )
 {
