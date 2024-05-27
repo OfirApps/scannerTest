@@ -251,6 +251,7 @@ function go() {
         document.querySelector('body').style.setProperty('--buscolor', colorr);
         geojsonMarkerOptions.color = colorr
         document.getElementById("busStopSelectionNumber").innerHTML = selection.RouteName
+        document.querySelector("#mapbody > div.busInfo.noselect > span").innerHTML = selection.DestinationCityName
         
         L.geoJSON(data,{
             style: function(feature) {
@@ -277,7 +278,7 @@ function go() {
             }   
         }).addTo(map);
         var locator = map.locate({
-            setView:true,
+            setView:false,
             watch:true
         })
         map.setView([32.0030, 34.8435], 12);
@@ -409,6 +410,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 map.on('locationfound', function(ev){
 currentloc = ev;
 console.log(currentloc)
+map.setView(currentloc)
 })
 
 if(navigator.userAgent.indexOf('iPhone') > -1 )
