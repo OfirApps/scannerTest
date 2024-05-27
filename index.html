@@ -195,7 +195,7 @@ const qrCodeSuccessCallback = (decodedText, decodedResult) => {
 };
 
 function onScanError(errorMessage) {
-    console.error(errorMessage);
+    console.log(errorMessage);
 }
 
 function backfromStops() {
@@ -265,8 +265,12 @@ function go() {
         
         // L.geoJSON(data,{
         map.addSource('nuslines', {
-            type: 'geojson',
-            data: data,
+            'type': 'geojson',
+            'data': data
+            // 'paint': {
+            //     'line-color': '#e11',
+            //     'line-width': 4
+            // }
         // style: function(feature) {
             
         //     if (feature.properties.class == "Bus stop") {
@@ -289,11 +293,41 @@ function go() {
         //         });
         //     }
         //  }   
-        }).addTo(map);
-        map.invalidateSize()
+        });
+        map.addLayer({
+          'id': 'busline',
+          'type': 'line',
+          'source': 'nuslines',
+          'layout': {},
+          'paint': {
+            'line-color': colorr,
+            'line-width': 4
+          }
+        });
+        map.addLayer({
+          'id': 'buspoints',
+          'type': 'circle',
+          'source': 'nuslines',
+          'filter':["==","$type","Point"],
+          'layout': {},
+          'paint': {
+            'circle-color':'#fff',
+            'circle-radius': 10,
+            'circle-opacity':0,
+            // 'circle-opacity':['match',
+            // ['get', 'class'],
+            // 'Bus stop',1,
+            // 'Bus route',0
+            // ],
+            'circle-stroke-color': colorr,
+            'circle-stroke-width': 3,
+            'circle-stroke-opacity':1
+
+          }
+        });
+        // map.invalidateSize()
     });
-    document.querySelector("#map > div.maplibregl-control-container > div.maplibregl-ctrl-bottom-left > div > a").style.display = "none"
-    document.querySelector("#map > div.maplibregl-control-container > div.maplibregl-ctrl-bottom-right").style.display = "none"
+    
 }
 
 
@@ -418,7 +452,7 @@ maptilersdk.config.apiKey = key;
 // //     attribution: '',
 // //     maxZoom: 18
 // // }).addTo(map);
-maptilersdk.config.primaryLanguage = maptilersdk.Language.HEBREW;
+maptilersdk.config.primaryLanguage = maptilersdk.Language.ENGLISH;
 
 const map = new maptilersdk.Map({
         container: 'map', // container's id or the HTML element to render the map
@@ -449,6 +483,11 @@ const map = new maptilersdk.Map({
 //     })
 // },20*1000)
 // })
+
+map.on('load', function(ev) {
+    document.querySelector("#map > div.maplibregl-control-container > div.maplibregl-ctrl-bottom-left > div > a").style.display = "none"
+    document.querySelector("#map > div.maplibregl-control-container > div.maplibregl-ctrl-bottom-right").style.display = "none"
+})
 
 if(navigator.userAgent.indexOf('iPhone') > -1 )
 {
