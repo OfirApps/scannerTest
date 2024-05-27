@@ -252,6 +252,11 @@ function go() {
         geojsonMarkerOptions.color = colorr
         document.getElementById("busStopSelectionNumber").innerHTML = selection.RouteName
         document.querySelector("#mapbody > div.busInfo.noselect > span").innerHTML = selection.DestinationCityName
+        var locator = map.locate({
+            setView:false,
+            watch:false
+        })
+        map.setView([32.0030, 34.8435], 12);
         
         L.geoJSON(data,{
             style: function(feature) {
@@ -277,11 +282,7 @@ function go() {
             }
             }   
         }).addTo(map);
-        var locator = map.locate({
-            setView:false,
-            watch:false
-        })
-        map.setView([32.0030, 34.8435], 12);
+        
     });
 }
 
@@ -400,7 +401,7 @@ function searchKavim(input) {
 
 var map = L.map('map').setView([32.0030, 34.8435], 12);
 key = atob("N1g2U2JuQXg4elFORkJYTlVDd2U")
-L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${key}`, {
+L.tileLayer(`https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}.png?key=${key}`, {
     attribution: '',
     maxZoom: 18
 }).addTo(map);
