@@ -222,103 +222,66 @@ function go() {
     position: fixed;bottom: 24vh;width: 100vw;text-align: center;color: white;direction: rtl;font-family: system-ui;z-index:999;" id="help" onclick='qrCodeSuccessCallback()'>שימו לב שהקוד ממוקד בתוך המסגרת. <br>הסריקה תתבצע באופן אוטומטי</div>`
     document.getElementById("secondscreen").style.display = "block";
     document.getElementById("firstscreen").style.display = "none";
-    axxx= true
-    var mone1 = 1
-    var mone2 = -1
-    var mosef = '0-1'
-    var mone0 = 0
-    var myFunc02 = function() {
-    
-        console.warn("a " + selection + mosef)
-        fetch(`https://corsproxy.io/`+ encodeURIComponent(`?https://www.markav.net/shapes/?q=${selection.RouteID}-${mosef}`))
-        .then(response => {
-            if (response.status !=500) {
-                //clearInterval(intervalId);
-                
-                fetch(`https://corsproxy.io/`+ encodeURIComponent(`?https://www.markav.net/shapes/?q=${selection.RouteID}-${mosef}`))
-                .then(response => response.json())
-                .then(data => {
-                    processData(data);
-                    //if selection.AgencyName includes "קווים" then color is buspresets.kavim, but if selection.AgencyName includes "מטרופולין" then color is buspresets.metropolin, and so on, "אגד" will be egged, "דן" will be dan and so on
-                    colorr = buspresets.rakal;
-                    switch (selection.AgencyName) {
-                        case "קווים":
-                            colorr = buspresets.kavim;
-                            break;
-                        case "מטרופולין":
-                            colorr = buspresets.metropolin;
-                            break;
-                        case "דן":
-                            colorr = buspresets.dan;
-                            break;
-                        case "אגד":
-                            colorr = buspresets.egged;
-                            break;
-                        case "אלקטרה":
-                            colorr = buspresets.electra;
-                            break;
-                        case "סופרבוס":
-                            colorr = buspresets.superbus;
-                            break;
-                    }
-                    document.querySelector('body').style.setProperty('--buscolor', colorr);
-                    geojsonMarkerOptions.color = colorr
-                    document.getElementById("busStopSelectionNumber").innerHTML = selection.RouteName
-                    
-                    L.geoJSON(data,{
-                        style: function(feature) {
-                        
-                        if (feature.properties.class == "Bus stop") {
-                            console.log("a")
-                            return {
-                                geojsonMarkerOptions
-                            }
-                        }
-
-                    },
-                    pointToLayer: function (feature, latlng) {
-                        console.log(feature.properties.class);
-                    return L.circleMarker(latlng, geojsonMarkerOptions);
-                    },
-                    onEachFeature: function (feature, layer) {
-                        if (feature.properties.class == "Bus stop") {
-                            console.log(feature.properties.class + " b");
-                            layer.on('click', function (e) {
-                                selectStop(feature);
-                            });
-                        }
-                        }   
-                    }).addTo(map);
-                    var locator = map.locate({
-                        setView:true,
-                        watch:true
-                    })
-                    map.setView([32.0030, 34.8435], 12);
-                });
-            } else {
-                
-                // if (mone0 == 11) {
-                if (mone2 == 10) {
-                    mone1++
-                    mone2 = 0
-                    } else {
-                        mone2++
-                    }
-                    mosef = `${mone1}-${mone2}`
-                    console.log(mosef)
-                // } else {
-                //     mone0++
-                //     mosef = mone0
-                // }
-                setTimeout(myFunc02(),200);
+    fetch(`?https://www.markav.net/shapes/?q=${selection.RouteID}`)
+    .then(response => response.json())
+    .then(data => {
+        processData(data);
+        //if selection.AgencyName includes "קווים" then color is buspresets.kavim, but if selection.AgencyName includes "מטרופולין" then color is buspresets.metropolin, and so on, "אגד" will be egged, "דן" will be dan and so on
+        colorr = buspresets.rakal;
+        switch (selection.AgencyName) {
+            case "קווים":
+                colorr = buspresets.kavim;
+                break;
+            case "מטרופולין":
+                colorr = buspresets.metropolin;
+                break;
+            case "דן":
+                colorr = buspresets.dan;
+                break;
+            case "אגד":
+                colorr = buspresets.egged;
+                break;
+            case "אלקטרה":
+                colorr = buspresets.electra;
+                break;
+            case "סופרבוס":
+                colorr = buspresets.superbus;
+                break;
+        }
+        document.querySelector('body').style.setProperty('--buscolor', colorr);
+        geojsonMarkerOptions.color = colorr
+        document.getElementById("busStopSelectionNumber").innerHTML = selection.RouteName
+        
+        L.geoJSON(data,{
+            style: function(feature) {
+            
+            if (feature.properties.class == "Bus stop") {
+                console.log("a")
+                return {
+                    geojsonMarkerOptions
+                }
             }
-        })
-    
-    };
-    
-    setTimeout(myFunc02(),200);
-    
 
+        },
+        pointToLayer: function (feature, latlng) {
+            console.log(feature.properties.class);
+        return L.circleMarker(latlng, geojsonMarkerOptions);
+        },
+        onEachFeature: function (feature, layer) {
+            if (feature.properties.class == "Bus stop") {
+                console.log(feature.properties.class + " b");
+                layer.on('click', function (e) {
+                    selectStop(feature);
+                });
+            }
+            }   
+        }).addTo(map);
+        var locator = map.locate({
+            setView:true,
+            watch:true
+        })
+        map.setView([32.0030, 34.8435], 12);
+    });
 }
 
 
