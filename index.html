@@ -289,6 +289,8 @@ function go() {
         }).addTo(map);
         map.invalidateSize()
     });
+    document.querySelector("#map > div.maplibregl-control-container > div.maplibregl-ctrl-bottom-left > div > a").style.display = "none"
+    document.querySelector("#map > div.maplibregl-control-container > div.maplibregl-ctrl-bottom-right").style.display = "none"
 }
 
 
@@ -416,8 +418,9 @@ maptilersdk.config.apiKey = key;
 const map = new maptilersdk.Map({
         container: 'map', // container's id or the HTML element to render the map
         style: maptilersdk.MapStyle.STREETS,
-        center: [32.0030, 34.8435], // starting position [lng, lat]
-        zoom: 14 // starting zoom
+        // center: [32.0030, 34.8435], // starting position [lng, lat]
+        // zoom: 14 // starting zoom
+        geolocate: maptilersdk.GeolocationType.POINT
 });
 // L.maptilerLayer({
 //   // Get your free API key at https://cloud.maptiler.com
