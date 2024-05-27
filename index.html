@@ -264,31 +264,31 @@ function go() {
         //map.setView([32.0030, 34.8435], 12);
         
         // L.geoJSON(data,{
-            map.addSource('nuslines', {
+        map.addSource('nuslines', {
             type: 'geojson',
             data: data,
-            style: function(feature) {
+        // style: function(feature) {
             
-            if (feature.properties.class == "Bus stop") {
-                console.log("a")
-                return {
-                    geojsonMarkerOptions
-                }
-            }
+        //     if (feature.properties.class == "Bus stop") {
+        //         console.log("a")
+        //         return {
+        //             geojsonMarkerOptions
+        //         }
+        //     }
 
-        },
-        pointToLayer: function (feature, latlng) {
-            console.log(feature.properties.class);
-        return L.circleMarker(latlng, geojsonMarkerOptions);
-        },
-        onEachFeature: function (feature, layer) {
-            if (feature.properties.class == "Bus stop") {
-                console.log(feature.properties.class + " b");
-                layer.on('click', function (e) {
-                    selectStop(feature);
-                });
-            }
-            }   
+        // },
+        // pointToLayer: function (feature, latlng) {
+        //     console.log(feature.properties.class);
+        // return L.circleMarker(latlng, geojsonMarkerOptions);
+        // },
+        // onEachFeature: function (feature, layer) {
+        //     if (feature.properties.class == "Bus stop") {
+        //         console.log(feature.properties.class + " b");
+        //         layer.on('click', function (e) {
+        //             selectStop(feature);
+        //         });
+        //     }
+        //  }   
         }).addTo(map);
         map.invalidateSize()
     });
@@ -421,6 +421,7 @@ maptilersdk.config.apiKey = key;
 const map = new maptilersdk.Map({
         container: 'map', // container's id or the HTML element to render the map
         style: maptilersdk.MapStyle.STREETS,
+        language:L.Maptilerlanguage.ENGLISH,
         // center: [32.0030, 34.8435], // starting position [lng, lat]
         // zoom: 14 // starting zoom
         geolocate: maptilersdk.GeolocationType.POINT
