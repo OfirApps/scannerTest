@@ -278,7 +278,7 @@ function go() {
             }   
         }).addTo(map);
         var locator = map.locate({
-            setView:false,
+            setView:true,
             watch:true
         })
         map.setView([32.0030, 34.8435], 12);
@@ -399,8 +399,8 @@ function searchKavim(input) {
         }
 
 var map = L.map('map').setView([32.0030, 34.8435], 12);
-
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+key = atob("N1g2U2JuQXg4elFORkJYTlVDd2U")
+L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${key}`, {
     attribution: '',
     maxZoom: 18
 }).addTo(map);
@@ -409,8 +409,8 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 map.on('locationfound', function(ev){
 currentloc = ev;
-console.log([currentloc.latlng.lat, currentloc.latlng.lng], 12)
-map.setView([currentloc.latlng.lat, currentloc.latlng.lng], 12)
+//console.log([currentloc.latlng.lat, currentloc.latlng.lng], 15)
+//map.setView([currentloc.latlng.lat, currentloc.latlng.lng], 15)
 })
 
 if(navigator.userAgent.indexOf('iPhone') > -1 )
