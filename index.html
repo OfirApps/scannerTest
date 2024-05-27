@@ -313,14 +313,14 @@ function go() {
           'paint': {
             'circle-color':'#fff',
             'circle-radius': 10,
-            'circle-opacity':0,
+            'circle-opacity':1,
             // 'circle-opacity':['match',
             // ['get', 'class'],
             // 'Bus stop',1,
             // 'Bus route',0
             // ],
             'circle-stroke-color': colorr,
-            'circle-stroke-width': 3,
+            'circle-stroke-width': 4,
             'circle-stroke-opacity':1
 
           }
@@ -458,7 +458,7 @@ const map = new maptilersdk.Map({
         container: 'map', // container's id or the HTML element to render the map
         style: maptilersdk.MapStyle.STREETS,
         // center: [32.0030, 34.8435], // starting position [lng, lat]
-        // zoom: 14 // starting zoom
+         zoom: 15, // starting zoom
         geolocate: maptilersdk.GeolocationType.POINT
 });
 // L.maptilerLayer({
