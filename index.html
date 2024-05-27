@@ -409,8 +409,8 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 map.on('locationfound', function(ev){
 currentloc = ev;
-console.log(currentloc)
-map.setView(currentloc)
+console.log([currentloc.latlng.lat, currentloc.latlng.lng], 12)
+map.setView([currentloc.latlng.lat, currentloc.latlng.lng], 12)
 })
 
 if(navigator.userAgent.indexOf('iPhone') > -1 )
