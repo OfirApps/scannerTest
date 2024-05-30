@@ -227,7 +227,8 @@ function go() {
     position: fixed;bottom: 24vh;width: 100vw;text-align: center;color: white;direction: rtl;font-family: system-ui;z-index:999;" id="help" onclick='qrCodeSuccessCallback()'>שימו לב שהקוד ממוקד בתוך המסגרת. <br>הסריקה תתבצע באופן אוטומטי</div>`
     document.getElementById("secondscreen").style.display = "block";
     document.getElementById("firstscreen").style.display = "none";
-    fetch(`https://moovitscanner.only-fans.club/shapes/${selection.RouteID}`)
+    //    fetch(`https://moovitscanner.only-fans.club/shapes/${selection.RouteID}`)
+    fetch(`https://scannertestserver.onrender.com/shapes/${selection.RouteID}`)
     .then(response => response.json())
     .then(data => {
         processData(data);
