@@ -167,8 +167,8 @@ extraNoseim = 0;
 function getDistance(origin, destination) {
     // return distance in meters
     console.log(origin,destination)
-    var lon1 = toRadian(origin.longitude),
-        lat1 = toRadian(origin.latitude),
+    var lon1 = toRadian(origin.lng),
+        lat1 = toRadian(origin.lat),
         lon2 = toRadian(destination[0]),
         lat2 = toRadian(destination[1]);
 
@@ -360,10 +360,13 @@ price = 0.0;
 Uprice = 0.0;
 function selectStop(stop) {
     console.log(stop)
+    const {lng, lat} = map.getCenter();
+    currentloc = [lng, lat];
     console.log(getDistance(currentloc,stop.geometry.coordinates))
     document.getElementById("thirdscreen").style.display = "none";
     document.getElementById("fourthscreen").style.display = "block";
     document.getElementById("noseatitle").innerText = nosea.title;
+    
     
     if (getDistance(currentloc,stop.geometry.coordinates) > 15000) {
         document.getElementById("distance").innerHTML = "40";
@@ -463,9 +466,11 @@ maptilersdk.config.primaryLanguage = maptilersdk.Language.ENGLISH;
 const map = new maptilersdk.Map({
         container: 'map', // container's id or the HTML element to render the map
         style: maptilersdk.MapStyle.STREETS,
-        // center: [32.0030, 34.8435], // starting position [lng, lat]
-         zoom: 15, // starting zoom
+        geolocateControl:true,
         geolocate: maptilersdk.GeolocationType.POINT
+        // center: [32.0030, 34.8435], // starting position [lng, lat]
+        // zoom: 15 // starting zoom
+        //geolocate: maptilersdk.GeolocationType.POINT
 });
 // L.maptilerLayer({
 //   // Get your free API key at https://cloud.maptiler.com
