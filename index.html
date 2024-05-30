@@ -167,8 +167,8 @@ extraNoseim = 0;
 function getDistance(origin, destination) {
     // return distance in meters
     console.log(origin,destination)
-    var lon1 = toRadian(origin.lng),
-        lat1 = toRadian(origin.lat),
+    var lon1 = toRadian(origin[0]),
+        lat1 = toRadian(origin[1]),
         lon2 = toRadian(destination[0]),
         lat2 = toRadian(destination[1]);
 
@@ -178,6 +178,7 @@ function getDistance(origin, destination) {
     var a = Math.pow(Math.sin(deltaLat/2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(deltaLon/2), 2);
     var c = 2 * Math.asin(Math.sqrt(a));
     var EARTH_RADIUS = 6371;
+    console.log(lon1,lat1,lon2,lat2)
     return c * EARTH_RADIUS * 1000;
 }
 function toRadian(degree) {
@@ -269,6 +270,9 @@ function go() {
         // })
         //map.setView([32.0030, 34.8435], 12);
         
+        if (map.getLayer('busline')) map.removeLayer('busline');
+        if (map.getLayer('buspoints')) map.removeLayer('buspoints');
+        if (map.getSource('nuslines')) map.removeSource('nuslines');
         // L.geoJSON(data,{
         map.addSource('nuslines', {
             'type': 'geojson',
@@ -340,6 +344,7 @@ function go() {
 
 function processData(dataX) {
     //for each child that has propeties.class == "Bus Stop"
+    document.getElementById("stops").innerHTML = ""
     for (let i = 0; i < dataX.features.length; i++) {
         if (dataX.features[i].properties.class == "Bus stop") {
             div = document.createElement("li");
@@ -361,14 +366,23 @@ Uprice = 0.0;
 function selectStop(stop) {
     console.log(stop)
     const {lng, lat} = map.getCenter();
-    currentloc = [lng, lat];
-    console.log(getDistance(currentloc,stop.geometry.coordinates))
+    console.log(getDistance([lng, lat],stop.geometry.coordinates))
     document.getElementById("thirdscreen").style.display = "none";
     document.getElementById("fourthscreen").style.display = "block";
     document.getElementById("noseatitle").innerText = nosea.title;
     
     
-    if (getDistance(currentloc,stop.geometry.coordinates) > 15000) {
+    if (getDistance([lng, lat],stop.geometry.coordinates) > 120000) {
+        document.getElementById("distance").innerHTML = "225";
+        price = 27.00;
+        Uprice = price * nosea.hanaha;
+        document.getElementById("price").innerText = Uprice.toFixed(2);
+    } else if (getDistance([lng, lat],stop.geometry.coordinates) > 40000) {
+        document.getElementById("distance").innerHTML = "75";
+        price = 16.00;
+        Uprice = price * nosea.hanaha;
+        document.getElementById("price").innerText = Uprice.toFixed(2);
+    } else if (getDistance([lng, lat],stop.geometry.coordinates) > 15000) {
         document.getElementById("distance").innerHTML = "40";
         price = 12.00;
         Uprice = price * nosea.hanaha;
@@ -386,6 +400,8 @@ function selectStop(stop) {
 function backfromStop() {
     document.getElementById("fourthscreen").style.display = "none";
     document.getElementById("thirdscreen").style.display = "block";
+    
+    
 }
 
 
