@@ -27,7 +27,7 @@
 
 </head>
 <body>
-    <div id="firstscreen" style="display: none;">
+    <div id="firstscreen" style="display: aaaa;">
         <div id="top" class="noselect" >
             <p>חיפוש הקו</p>
             <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg">
@@ -144,7 +144,7 @@
             <button class="noselect" onclick="pay()">תקף נסיעה</button>
         </div>
     </div>
-    <div id="fifthscreen" style="display: aaa;">
+    <div id="fifthscreen" style="display: none;">
         <div id="top" class="noselect" style="border:0px;">
             <!-- <p>סרוק קוד QR</p> -->
             <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg" onclick="backtoSelectia()"> <!-------------------->
@@ -165,8 +165,12 @@
                 <svg id="niceborder" viewBox='0 0 300 100' preserveAspectRatio='none'>
                     <line x1="0" y1="30" x2="500" y2="30" stroke-color="#f8a100" />
                 </svg>
-                <div>
-
+                <div id="ishurnesiaback">
+                    <h3>אישור נסיעה</h3>
+                    <div id="extrainfo">
+                        <img src="" id="companyImgLogo">
+                        <p>קווים (Kavim)</p>
+                    </div>
                 </div>
             </div>
             <button class="noselect" onclick="pay()">סגור</button>
@@ -272,37 +276,45 @@ function go() {
         colorr2 = null;
         colorr3 = pSBC(0.8,buspresets.rakal);
         colorr4 = pSBC(0.9,buspresets.rakal);
+        namer = "kavim";
         switch (selection.AgencyName) {
             case "קווים":
                 colorr = buspresets.kavim;
                 colorr2 = buspresets.kavim2;
                 colorr3 = pSBC(0.8,buspresets.kavim2);
+                namer = "kavim";
                 break;
             case "מטרופולין":
                 colorr = buspresets.metropolin;
                 colorr3 = pSBC(0.6,buspresets.metropolin);
+                namer = "metropolin";
                 break;
             case "דן":
                 colorr = buspresets.dan;
                 colorr3 = pSBC(0.4,buspresets.dan);
+                namer = "dan";
                 break;
             case "אגד":
                 colorr = buspresets.egged;
+                namer = "egged";
                 colorr3 = "#d3efd5"
                 break;
             case "אלקטרה":
                 colorr = buspresets.electra;
                 colorr3 = pSBC(0.5,buspresets.electra);
+                namer = "electra";
                 break;
             case "סופרבוס":
                 colorr = buspresets.superbus;
                 colorr3 = pSBC(0.25,buspresets.superbus);
+                namer = "superbus";
                 break;
         }
         document.querySelector('body').style.setProperty('--buscolor', colorr);
         geojsonMarkerOptions.color = colorr
         document.querySelector("#niceborder > line").style.stroke = colorr2 || colorr;
         document.querySelector("#ishurnesia").style.background = colorr3;
+        document.querySelector("#ishurnesiaback").style.backgroundImage = `url("./busIMGS/logo_`+ namer +`.svg")`
         document.getElementById("busStopSelectionNumber").innerHTML = selection.RouteName
         document.querySelector("#mapbody > div.busInfo.noselect > span").innerHTML = selection.DestinationCityName
         // var locator = map.locate({
@@ -474,7 +486,10 @@ function updatePrice(addetive) {
     document.getElementById("numofnoseim").innerText = extraNoseim + 1
 }
 
-
+function pay() {
+    document.getElementById("fourthscreen").style.display = "none";
+    document.getElementById("fifthscreen").style.display = "";
+}
 
 // Load GeoJSON data from a file (replace with your actual file path)
 var geojsonMarkerOptions = {

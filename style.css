@@ -291,6 +291,12 @@ button {
   background-position: center;
   width: 100%;
 }
+#ishurnesia div h3 {
+  margin: 0.5rem;
+}
+#ishurnesia div #extrainfo {
+  display: none;
+}
 #ishurnesia #niceborder {
   height: 0.5rem;
   width: 100%;
