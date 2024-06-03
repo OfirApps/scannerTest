@@ -6,6 +6,8 @@ body {
   font-family: system-ui;
   direction: rtl;
   --buscolor: #8cbcd8;
+  --seconderybuscolor: #03296a;
+  --thirdbuscolor: #4e8cf7;
 }
 .noselect {
   -webkit-touch-callout: none;
@@ -175,11 +177,6 @@ body {
   margin-top: 0px;
   margin-bottom: 2px;
 }
-.pricer .biggerdiv .note {
-  font-weight: 400;
-  font-size: smaller;
-  margin-top: 0px;
-}
 .pricer .smallerdiv {
   width: 25vw;
   display: flex;
@@ -190,6 +187,12 @@ body {
 }
 .pricer .smallerdiv span {
   margin-left: 2px;
+}
+.note {
+  font-weight: 400 !important;
+  font-size: smaller !important;
+  margin-top: 0px !important;
+  color: #817e81;
 }
 #lastinfo {
   width: 100vw;
@@ -225,11 +228,84 @@ body {
   max-height: 2.5rem;
   max-width: 2.5rem;
 }
-#lastinfo button {
+button {
   width: 90vw;
   padding: 1rem;
   border: 0;
   border-radius: 3px;
-  background: #1b70b9;
+  background: #2699ff;
   color: white;
+}
+#successscreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: normal;
+  height: 100vh;
+}
+#successscreen svg {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+#successscreen h2 {
+  margin: 0;
+}
+#successscreen p:not(.note) {
+  margin-top: 0px;
+  font-size: smaller;
+  font-weight: bold;
+}
+#successscreen p:not(.note) #tikofhour {
+  font-weight: normal;
+}
+#successscreen p.note {
+  margin-bottom: 1.5rem;
+}
+#successscreen .link {
+  color: #1d78c6;
+  padding: 1rem;
+  font-weight: bold;
+  margin: 0;
+  position: fixed;
+  bottom: calc(1rem);
+}
+#successscreen button {
+  position: fixed;
+  bottom: calc(1rem + 3.5rem);
+}
+#ishurnesia {
+  height: 28vh;
+  aspect-ratio: 133/79;
+  border-radius: 10px;
+  background: #edf5ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+#ishurnesia div {
+  height: calc(100% - 0.5rem);
+  background-image: url("busIMGS/logo_superbus.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+}
+#ishurnesia #niceborder {
+  height: 0.5rem;
+  width: 100%;
+  fill: #333;
+  /* fill: none; */
+  /* stroke: blue; */
+  /* stroke-dasharray: 10, 10; */
+  margin: 0px;
+  border-radius: inherit;
+  margin-bottom: auto;
+}
+#ishurnesia #niceborder line {
+  fill: none;
+  stroke: var(--seconderybuscolor);
+  stroke-width: 185rem;
+  stroke-dasharray: 8;
+  transform: skewX(3deg);
 }

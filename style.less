@@ -7,6 +7,8 @@ body {
     font-family: system-ui;
     direction: rtl;
     --buscolor:#8cbcd8;
+    --seconderybuscolor:#03296a;
+    --thirdbuscolor:#4e8cf7;
 }
 
 .noselect {
@@ -175,6 +177,8 @@ body {
     }
 }
 
+
+
 .pricer {
     height: 13vh; 
     display: flex;
@@ -191,11 +195,7 @@ body {
             margin-top: 0px;
             margin-bottom: 2px;
         }
-        .note {
-            font-weight: 400;
-            font-size: smaller;
-            margin-top: 0px;
-        }
+        
     }
     .smallerdiv {
         width: 25vw;
@@ -209,6 +209,13 @@ body {
             
         }
     }
+}
+
+.note {
+    font-weight: 400 !important;
+    font-size: smaller !important;
+    margin-top: 0px !important;
+    color:#817e81;
 }
 
 #lastinfo {
@@ -247,12 +254,90 @@ body {
             }
         }
     }
-    button {
-        width: 90vw;
-        padding: 1rem;
-        border: 0;
-        border-radius: 3px;
-        background: #1b70b9;
-        color: white;
+    
+}
+button {
+    width: 90vw;
+    padding: 1rem;
+    border: 0;
+    border-radius: 3px;
+    background: #2699ff;
+    color: white;
+}
+#successscreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: normal;
+    height: 100vh;
+    svg {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
     }
+    h2 {
+        margin: 0;
+    }
+    p:not(.note) {
+        margin-top: 0px;
+        font-size: smaller;
+        font-weight: bold;
+        #tikofhour {
+            font-weight: normal;
+        }
+    }
+    p.note {
+        margin-bottom: 1.5rem;
+    }
+    .link {
+        color: #1d78c6;
+        padding: 1rem;
+        font-weight: bold;
+        margin: 0;
+        position: fixed;
+        bottom: calc(1rem);
+    }
+    button {
+        position: fixed;
+        bottom: calc(1rem + 3.5rem);
+    }
+}
+#ishurnesia {
+    height: 28vh;
+    aspect-ratio: 133/ 79;
+    border-radius: 10px;
+    //background: -webkit-linear-gradient(180deg, #2699ff 0%, #1d78c6 100%);
+    background: #edf5ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    div {
+        height:calc(100% - 0.5rem);
+        //background-color: red;
+        background-image: url("./busIMGS/logo_superbus.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+    }
+    #niceborder {
+        height: 0.5rem;
+        width: 100%;
+        fill: #333;
+        /* fill: none; */
+        /* stroke: blue; */
+        /* stroke-dasharray: 10, 10; */
+        margin: 0px;
+        border-radius: inherit;
+        
+        margin-bottom: auto;
+        line {
+            fill: none;
+            stroke: var(--seconderybuscolor);
+            stroke-width: 185rem;
+            stroke-dasharray: 8;
+            transform: skewX(3deg);
+        }
+    }
+    
 }
