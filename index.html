@@ -30,7 +30,7 @@
     <div id="firstscreen" style="display: aaaa;">
         <div id="top" class="noselect" >
             <p>חיפוש הקו</p>
-            <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg">
+            <svg width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="backarrowsvg" onclick="location.replace('/green.html')">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 4.29289C8.68342 3.90237 9.31658 3.90237 9.70711 4.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L9.70711 19.7071C9.31658 20.0976 8.68342 20.0976 8.29289 19.7071C7.90237 19.3166 7.90237 18.6834 8.29289 18.2929L14.5858 12L8.29289 5.70711C7.90237 5.31658 7.90237 4.68342 8.29289 4.29289Z" fill="#c3c3c3c3"/>
             </svg>
         </div>
@@ -299,7 +299,7 @@ function go() {
                 namer = "egged";
                 colorr3 = "#d3efd5"
                 break;
-            case "אלקטרה": case "אלקטרה אפיקים תחבורה":
+            case "אלקטרה": case "אלקטרה אפיקים תחבורה": case "אלקטרה אפיקים": case "אפיקים":
                 colorr = buspresets.electra;
                 colorr3 = pSBC(0.5,buspresets.electra);
                 namer = "electra";
@@ -418,7 +418,14 @@ price = 0.0;
 Uprice = 0.0;
 function selectStop(stop) {
     console.log(stop)
-    const {lng, lat} = map.getCenter();
+    var {lng, lat} = map.getCenter();
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        lng = position.coords.latitude;
+        lat = position.coords.longitude;
+        // Now you can use 'latitude' and 'longitude' in your application
+    });
+}
     console.log(getDistance([lng, lat],stop.geometry.coordinates))
     document.getElementById("thirdscreen").style.display = "none";
     document.getElementById("fourthscreen").style.display = "block";
@@ -544,11 +551,25 @@ const map = new maptilersdk.Map({
         container: 'map', // container's id or the HTML element to render the map
         style: maptilersdk.MapStyle.STREETS,
         geolocateControl:true,
-        geolocate: maptilersdk.GeolocationType.POINT
+        geolocate: maptilersdk.GeolocationType.POINT,
+        enableHighAccuracy: true
         // center: [32.0030, 34.8435], // starting position [lng, lat]
         // zoom: 15 // starting zoom
         //geolocate: maptilersdk.GeolocationType.POINT
 });
+
+
+const geolocate = new maptilersdk.GeolocateControl({
+ positionOptions: {
+   enableHighAccuracy: true
+ },
+ trackUserLocation: false,
+ showUserLocation:true
+});
+// Add the control to the map.
+// map.addControl(geolocate);
+
+
 // L.maptilerLayer({
 //   // Get your free API key at https://cloud.maptiler.com
 //   apiKey: key,
@@ -572,9 +593,25 @@ const map = new maptilersdk.Map({
 // },20*1000)
 // })
 
+geolocate.on('geolocate', function() {
+  console.log('A geolocate event has occurred.')
+});
+
+
 map.on('load', function(ev) {
     document.querySelector("#map > div.maplibregl-control-container > div.maplibregl-ctrl-bottom-left > div > a").style.display = "none"
     document.querySelector("#map > div.maplibregl-control-container > div.maplibregl-ctrl-bottom-right").style.display = "none"
+    console.log("1")
+    geolocate.trigger();
+    
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        console.log(position)
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        // Now you can use 'latitude' and 'longitude' in your application
+    });
+}
 })
 
 if(navigator.userAgent.indexOf('iPhone') > -1 )
